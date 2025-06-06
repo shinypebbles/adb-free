@@ -23,6 +23,12 @@ sql admin/SysPassword1@localhost:1521/myatp @sh_install
 ```
 Select ai
 ```
+SQL> select ai how many customers in san fransisco are married;
+
+   MARRIED_CUSTOMERS_COUNT 
+__________________________ 
+                         0 
+
 SQL> select ai showsql how many customers in san fransisco are married;
 
 RESPONSE                                      
@@ -54,4 +60,33 @@ SQL> SELECT COUNT(*) AS "Number of Married Customers in San Francisco"
    Number of Married Customers in San Francisco 
 _______________________________________________ 
                                              46
+
+SQL> select ai find the top 3 baby boomers big spenders;
+
+CUSTOMER_NAME       CUST_YEAR_OF_BIRTH CUST_EMAIL                     TOTAL_AMOUNT_SPENT 
+________________ _____________________ ___________________________ _____________________ 
+Dora Rice                         1961 Rice@company.example.com                103412.66 
+Lolita Katz                       1962 Katz@company.example.com                 99578.09 
+Mitchel Polk                      1954 Polk@company.example.com                 97010.48 
+
+SQL> select ai showsql find the top 3 baby boomers big spenders;
+
+RESPONSE                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________ 
+SELECT 
+    C.CUST_FIRST_NAME || ' ' || C.CUST_LAST_NAME AS CUSTOMER_NAME,
+    C.CUST_YEAR_OF_BIRTH,
+    C.CUST_EMAIL,
+    SUM(S.AMOUNT_SOLD) AS TOTAL_AMOUNT_SPENT
+FROM 
+    "SH"."CUSTOMERS" C
+JOIN 
+    "SH"."SALES" S ON C.CUST_ID = S.CUST_ID
+WHERE 
+    C.CUST_YEAR_OF_BIRTH BETWEEN 1946 AND 1964
+GROUP BY 
+    C.CUST_FIRST_NAME, C.CUST_LAST_NAME, C.CUST_YEAR_OF_BIRTH, C.CUST_EMAIL
+ORDER BY 
+    TOTAL_AMOUNT_SPENT DESC
+FETCH FIRST 3 ROWS ONLY    
 ```
