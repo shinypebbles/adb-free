@@ -1,3 +1,7 @@
+Docker
+```
+docker run -d -p 1521:1522 -p 1522:1522 -p 8443:8443 -p 27017:27017 -e WORKLOAD_TYPE=ATP -e WALLET_PASSWORD=<Password> -e ADMIN_PASSWORD=<Password> --cap-add SYS_ADMIN --device /dev/fuse --name adb-free --hostname adb-free ghcr.io/oracle/adb-free:latest-23ai
+```
 yum/dnf
 ```
 docker exec -u root --workdir / -ti adb-free /bin/sh
