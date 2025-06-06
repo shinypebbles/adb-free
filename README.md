@@ -21,7 +21,94 @@ tar -xvzf v23.3.tar.gz
 cd db-sample-schemas-23.3/sales_history
 sql admin/SysPassword1@localhost:1521/myatp @sh_install
 ```
-Select ai
+Create ai profile
+```
+sh-4.4$ sql admin/<Password>@localhost:1521/myatp
+
+
+SQLcl: Release 24.4 Production on Fri Jun 06 08:12:11 2025
+
+Copyright (c) 1982, 2025, Oracle.  All rights reserved.
+
+Last Successful login time: Fri Jun 06 2025 08:12:12 +00:00
+
+Connected to:
+Oracle Database 23ai Enterprise Edition Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems
+Version 23.8.0.25.05
+
+SQL> BEGIN
+  2       DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
+  3           host => 'api.openai.com',
+  4           ace  => xs$ace_type(privilege_list => xs$name_list('http'),
+  5                               principal_name => 'ADMIN',
+  6                               principal_type => xs_acl.ptype_db)
+  7       );
+  8      END;
+  9*     /
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT * FROM dba_network_acls;
+
+HOST                 LOWER_PORT    UPPER_PORT ACL                                             ACLID               ACL_OWNER    
+_________________ _____________ _____________ _______________________________________________ ___________________ ____________ 
+*                                             NETWORK_ACL_339116DCD2B817B6E06336CD5E64DFED    0000000080002724    SYS          
+api.openai.com                                NETWORK_ACL_36E3CB76038908DAE063020011AC9C88    000000008000274C    SYS          
+
+SQL> SELECT * FROM dba_network_acl_privileges;
+
+ACL                                             ACLID               PRINCIPAL            PRIVILEGE    IS_GRANT    INVERT    START_DATE    END_DATE    ACL_OWNER    
+_______________________________________________ ___________________ ____________________ ____________ ___________ _________ _____________ ___________ ____________ 
+NETWORK_ACL_339116DCD2B817B6E06336CD5E64DFED    0000000080002724    GSMADMIN_INTERNAL    resolve      true        false                               SYS          
+NETWORK_ACL_36E3CB76038908DAE063020011AC9C88    000000008000274C    ADMIN                http         true        false                               SYS          
+
+SQL> BEGIN
+  2    DBMS_CLOUD.CREATE_CREDENTIAL(
+  3      credential_name => 'AI_CRED',
+  4      username => '<email>',
+  5      password => '<API-key>'
+  6    );
+  7  END;
+  8* /
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT * FROM user_credentials;
+
+CREDENTIAL_NAME    USERNAME                   WINDOWS_DOMAIN    COMMENTS                                                   ENABLED    
+__________________ __________________________ _________________ __________________________________________________________ __________ 
+AI_CRED            <email>                                      {"comments":"Created via DBMS_CLOUD.create_credential"}    TRUE       
+
+SQL> BEGIN
+  2    DBMS_CLOUD_AI.create_profile(
+  3        profile_name => 'SH_OPENAI',
+  4        attributes => '{"provider": "openai",
+  5                        "credential_name": "AI_CRED",
+  6                        "object_list": [{"owner": "SH", "name": "channels"},  
+  7                                        {"owner": "SH", "name": "costs"},
+  8                                        {"owner": "SH", "name": "countries"},
+  9                                        {"owner": "SH", "name": "customers"},  
+ 10                                        {"owner": "SH", "name": "products"},
+ 11                                        {"owner": "SH", "name": "promotions"},
+ 12                                        {"owner": "SH", "name": "sales"},
+ 13                                        {"owner": "SH", "name": "times"},
+ 14                                        {"owner": "SH", "name": "supplementary_demographics"}]
+ 15         }');
+ 16  END;
+ 17* /
+
+PL/SQL procedure successfully completed.
+
+SQL> BEGIN
+  2    DBMS_CLOUD_AI.SET_PROFILE(
+  3       profile_name => 'SH_OPENAI'
+  4    );
+  5  END;
+  6* /
+
+PL/SQL procedure successfully completed.
+```
+Select ai demo
 ```
 SQL> select ai how many customers in san fransisco are married;
 
