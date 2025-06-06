@@ -1,3 +1,4 @@
+```
 docker exec -u root --workdir / -ti adb-free /bin/sh
 whoami
 
@@ -9,3 +10,4 @@ dnf install vi -y
 dnf install wget -y
 dnf install ncurses -y
 dnf install iputils -y
+```
