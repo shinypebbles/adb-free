@@ -179,5 +179,33 @@ GROUP BY
     C.CUST_FIRST_NAME, C.CUST_LAST_NAME, C.CUST_YEAR_OF_BIRTH, C.CUST_EMAIL
 ORDER BY 
     TOTAL_AMOUNT_SPENT DESC
-FETCH FIRST 3 ROWS ONLY    
+FETCH FIRST 3 ROWS ONLY
+
+SQL> select ai what are woman and men spending;
+
+   TOTAL_AMOUNT_SOLD    TOTAL_QUANTITY_SOLD CUST_GENDER    
+____________________ ______________________ ______________ 
+          34772567.7                 324140 F              
+         63433263.51                 594703 M              
+
+SQL> select ai who are spending more men or woman;
+
+Error starting at line : 1 in command -
+select ai who are spending more men or woman
+Error at Command Line : 1 Column : 15
+Error report -
+SQL Error: ORA-00900: invalid SQL statement
+
+https://docs.oracle.com/error-help/db/ora-00900/00900. 00000 -  "invalid SQL statement"
+*Cause:    The statement was not recognized as a valid SQL
+           statement. This error can occurred if the Procedural Option was
+           not installed and a SQL statement was issued that requires this
+           option (for example, a CREATE PROCEDURE statement). You can
+           determine if the Procedural Option was installed by starting
+           SQL*Plus. If the PL/SQL banner was not displayed, then the
+           option was not installed.
+*Action:   Correct the syntax or install the Procedural Option.
+
+More Details :
+https://docs.oracle.com/error-help/db/ora-00900/
 ```
