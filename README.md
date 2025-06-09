@@ -23,7 +23,7 @@ cd downloads/
 wget https://github.com/oracle-samples/db-sample-schemas/archive/refs/tags/v23.3.tar.gz
 tar -xvzf v23.3.tar.gz
 cd db-sample-schemas-23.3/sales_history
-sql admin/SysPassword1@localhost:1521/myatp @sh_install
+sql admin/<password>@localhost:1521/myatp @sh_install
 ```
 Create ai profile
 ```
@@ -208,4 +208,19 @@ https://docs.oracle.com/error-help/db/ora-00900/00900. 00000 -  "invalid SQL sta
 
 More Details :
 https://docs.oracle.com/error-help/db/ora-00900/
+
+SQL> select ai showsql who are spending more men or woman;
+
+RESPONSE                                                                                                                                                      
+_____________________________________________________________________________________________________________________________________________________________ 
+Sorry, unfortunately a valid SELECT statement could not be generated for your natural language prompt. Here is some more information to help you further: 
+
+```sql
+SELECT gender,
+       SUM(amount_sold) AS total_spent
+FROM "SH"."SALES" s
+JOIN "SH"."CUSTOMERS" c ON s.cust_id = c.cust_id
+WHERE c.cust_gender = 'M' OR c.cust_gender = 'F'
+GROUP BY gender
+ORDER BY total_spent DESC    
 ```
