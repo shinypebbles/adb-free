@@ -16,6 +16,10 @@ dnf install wget -y
 dnf install ncurses -y
 dnf install iputils -y
 ```
+Oracle alert location
+```
+cd /u01/app/oracle/diag/rdbms/pod1/POD1/trace
+```
 Oracle Sample Schema's
 ```
 mkdir downloads
